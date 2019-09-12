@@ -21,11 +21,11 @@ class ProductTemplate(models.Model):
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    item_number = fields.Char('Item Number', related='product_variant_ids.item_number')
-    model_number = fields.Char('Model Number', related='product_variant_ids.model_number')
+    item_number = fields.Char('Item Number', related='product_id.item_number')
+    model_number = fields.Char('Model Number', related='product_id.model_number')
 
 class AccountInvoiceLine(models.Model):
     _inherit = 'account.invoice.line'
 
-    item_number = fields.Char('Item Number', related='product_variant_ids.item_number')
-    model_number = fields.Char('Model Number', related='product_variant_ids.model_number')
+    item_number = fields.Char('Item Number', related='product_id.item_number')
+    model_number = fields.Char('Model Number', related='product_id.model_number')

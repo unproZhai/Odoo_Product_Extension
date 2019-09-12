@@ -6,8 +6,8 @@
         <field name="inherit_id" ref="product.product_normal_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='categ_id']" position="after">
-                <field name="item_number" attrs="{'invisible': [('product_variant_count', '>', 1)]}"/>
-                <field name="model_number" attrs="{'invisible': [('product_variant_count', '>', 1)]}"/>
+                <field name="item_number"/>
+                <field name="model_number"/>
             </xpath>
         </field>
     </record>
@@ -18,8 +18,8 @@
         <field name="inherit_id" ref="product.product_template_only_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='categ_id']" position="after">
-                <field name="item_number" attrs="{'invisible': [('product_variant_count', '>', 1)]}"/>
-                <field name="model_number" attrs="{'invisible': [('product_variant_count', '>', 1)]}"/>
+                <field name="item_number"/>
+                <field name="model_number"/>
             </xpath>
         </field>
     </record>
@@ -61,8 +61,8 @@
                         <ul style="list-style-type:none; text-align:center; ">
                             <li t-if="record.item_number.raw_value">#<field name="item_number"/></li>
                             <li style="color:red;"><field name="lst_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/></li>
-                            <li><field name="model_number" attrs="{'invisible': [('product_variant_count', '>', 1)]}"/></li>
-                            <li><field name="name" attrs="{'invisible': [('product_variant_count', '>', 1)]}"/></li>
+                            <li><field name="model_number"/></li>
+                            <li><field name="name"/></li>
                         </ul>
                     </div>
                     <div invisible="not context.get('is_sale_view')" id="add_to_quotation">
