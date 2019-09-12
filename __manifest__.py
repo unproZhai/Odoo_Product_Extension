@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "productExtension",
+    'name': "product Extension",
 
     'summary': """
         Adding item number and model number to the product""",
