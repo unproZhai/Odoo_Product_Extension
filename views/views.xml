@@ -30,16 +30,16 @@
         <field name="inherit_id" ref="product.product_template_kanban_view"/>
         <field name="arch" type="xml">
             <xpath expr="//div[@class='oe_kanban_global_click']" position="replace">
-                <div class="oe_kanban_global_click">
+                <div class="oe_kanban_global_click" style="width: 23.5%; flex: none;">
                     <div>
                         <img t-att-src="kanban_image('product.template', 'image_medium', record.id.raw_value)" alt="Product" style="display: block; margin-left: auto; margin-right: auto; width: 50%;"/>
                     </div>
                     <div class="oe_kanban_details" style="font-size: 15px;">
                         <ul style="list-style-type:none; text-align:center; ">
-                            <li t-if="record.item_number.raw_value">#<field name="item_number"/></li>
+                            <li t-if="record.item_number.raw_value">#<field name="item_number" attrs="{'invisible': [('product_variant_count', '>', 1)]}"/></li>
                             <li style="color:red;"><field name="lst_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/></li>
                             <li><field name="model_number" attrs="{'invisible': [('product_variant_count', '>', 1)]}"/></li>
-                            <li><field name="name" attrs="{'invisible': [('product_variant_count', '>', 1)]}"/></li>
+                            <li><field name="name" /></li>
                         </ul>
                     </div>
                 </div>
@@ -76,28 +76,52 @@
         </field>
     </record>
 
+    <record id="product_kanban_view_category_image" model="ir.ui.view">		
+        <field name="name">product.product.kanban.inherit.customize</field>		
+        <field name="model">product.category</field>		
+        <field name="inherit_id" ref="product.product_category_form_view"/>		
+        <field name="arch" type="xml">		
+            <xpath expr="//div[@class='oe_title']" position="before">		
+                <field name="image" widget="image" class="oe_avatar" modifiers="{}"/>		
+            </xpath>		
+        </field>		
+    </record>		
+
     <record id='sale_oder_form_quote_number' model="ir.ui.view">
-          <field name="name">sale.order.form.header.num</field>
-          <field name="model">sale.order</field>
-          <field name="inherit_id" ref="sale.view_order_form"/>
-          <field name="arch" type="xml">
-            <xpath expr="//tree/field[@name='product_id']" position="after">
-              <field name="item_number"/>
-              <field name="model_number"/>
+        <field name="name">sale.order.form.header.num</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree/field[@name='name']" position="after">
+                <field name="image_small" widget="image" style="width:64px; height:64px;" />
+                <field name="item_number"/>
+                <field name="model_number"/>
             </xpath>
-          </field>
+        </field>
     </record>
 
     <record id='invoice_form_quote_number' model="ir.ui.view">
-          <field name="name">account.invoice.form.header.num</field>
-          <field name="model">account.invoice</field>
-          <field name="inherit_id" ref="account.invoice_form"/>
-          <field name="arch" type="xml">
-            <xpath expr="//tree/field[@name='product_id']" position="after">
-              <field name="item_number"/>
-              <field name="model_number"/>
+        <field name="name">account.invoice.form.header.num</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree/field[@name='name']" position="after">
+                <field name="item_number"/>
+                <field name="model_number"/>
             </xpath>
-          </field>
+        </field>
+    </record>
+
+    <record id="product_variant_easy_edit_view_item_number" model="ir.ui.view">
+        <field name="name">product.product.product.view.form.item.number</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='codes']/field[@name='default_code']" position="after">
+                <field name="item_number"/>
+                <field name="model_number"/>
+            </xpath>
+        </field>
     </record>
 
 </odoo>

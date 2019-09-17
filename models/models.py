@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import api, fields, models, tools, _
+from odoo.tools import pycompat
 
 class ProductCategory(models.Model):
     _inherit = "product.category"   
@@ -18,12 +19,20 @@ class ProductProduct(models.Model):
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    item_number = fields.Char(store=True, index=True,
+    item_number = fields.Char(string='Item number', index=True,
                                related='product_variant_ids.item_number',
                                readonly=False, help='Item Number')
-    model_number = fields.Char(store=True, index=True,
+    model_number = fields.Char(string='Model number', index=True,
                                related='product_variant_ids.model_number',
                                readonly=False, help='Model Number')
+
+    @api.model
+    def create(self, values):
+        if ('item_number' in values) and ('model_number' in values) :
+            new_rec = super(ProductTemplate, self).create(values)
+            new_rec.item_number = values['item_number']
+            new_rec.model_number = values['model_number']              
+            return new_rec
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
@@ -33,7 +42,6 @@ class SaleOrderLine(models.Model):
 
     image_small = fields.Binary(
         'Product Image', related='product_id.image_small')
-
 
 class AccountInvoiceLine(models.Model):
     _inherit = 'account.invoice.line'
